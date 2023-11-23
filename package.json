@@ -1,0 +1,24 @@
+{
+  "name": "alertas-tempranas",
+  "version": "1.0.0",
+  "description": "Aplicación que permite la detección temprana de alumnos con altas probabilidades de abandonar su educación.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
+    "server": "node ./server/index.js",
+    "client": "cd client && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Natashanadnet/alertas-tempranas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Natashanadnet/alertas-tempranas/issues"
+  },
+  "homepage": "https://github.com/Natashanadnet/alertas-tempranas#readme",
+  "dependencies": {
+    "if-env": "^1.0.4"
+  }
+}
