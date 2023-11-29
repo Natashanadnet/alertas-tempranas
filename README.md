@@ -12,7 +12,7 @@ Path: alertas-tempranas\server\config\config.json
 - Tener instalado node (la version del proyecto es v20.9.0)
 - Dentro del proyecto (root) en la terminal correr los siguientes comandos:
 
-# Para instalar las dependencias (estando en el root):
+# Para instalar las dependencias (estando en el root)(Obs: Tarda un poco):
 
 npm run install-all
 
@@ -20,6 +20,6 @@ npm run install-all
 
 npm run start-all
 
-# Para cargar los registros iniciales (estando en el root):
+# Para cargar los registros iniciales, abrir una terminal nueva en el root y ejecutar:
 
 npm run setup-server
