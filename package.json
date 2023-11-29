@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Aplicación que permite la detección temprana de alumnos con altas probabilidades de abandonar su educación.",
   "scripts": {
-    "install-all": "cd client && npm install && cd ../server && npm install",
-    "setup-server": "cd server && node scripts/insert-initial-roles.js",
-    "start-all": "concurrently \"cd client && npm start\" \"cd server && npm start\""
+    "install-all": "npm install -g concurrently && cd client && npm install && cd ../server && npm install",
+    "start-all": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
+    "setup-server": "cd server && node scripts/insert-initial-roles.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "if-env": "^1.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
