@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Aplicación que permite la detección temprana de alumnos con altas probabilidades de abandonar su educación.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
-    "server": "node ./server/index.js",
-    "client": "cd client && npm run dev"
+    "install-all": "cd client && npm install && cd ../server && npm install",
+    "setup-server": "cd server && node scripts/insert-initial-roles.js",
+    "start-all": "concurrently \"cd client && npm start\" \"cd server && npm start\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,7 @@
   },
   "homepage": "https://github.com/Natashanadnet/alertas-tempranas#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "if-env": "^1.0.4"
   }
 }
