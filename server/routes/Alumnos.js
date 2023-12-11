@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Alumnos, Cursos } = require("../models");
-const { registrarAlum } = require("../services/AlumnoService");
+const { registrarAlum, buscarPorDocu } = require("../services/AlumnoService");
 
 router.get("/", async (req, res) => {
   const listOfAlumnos = await Alumnos.findAll();
@@ -15,6 +15,10 @@ router.get("/cursos", async (req, res) => {
 
 router.post("/", (req, res) => {
   registrarAlum(req, res);
+});
+
+router.post("/buscar", async (req, res) => {
+  buscarPorDocu(req, res);
 });
 
 module.exports = router;

@@ -30,6 +30,27 @@ const registrarAlum = async (req, res) => {
   }
 };
 
+const buscarPorDocu = async (req, res) => {
+  try {
+    const { documento } = req.body;
+
+    // se ve si el alumno con ese mail ya existe
+    const alumnoExistentedocu = await Alumnos.findOne({
+      where: { documento: documento },
+    });
+    if (!alumnoExistentedocu) {
+      return res
+        .status(400)
+        .json({ error: "No se encontro ningun alumno con ese documento." });
+    }
+    res.json({ alumno: alumnoExistentedocu });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al buscar al alumno" });
+  }
+};
+
 module.exports = {
   registrarAlum,
+  buscarPorDocu,
 };

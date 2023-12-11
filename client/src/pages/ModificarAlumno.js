@@ -39,10 +39,11 @@ export default function ModificarAlumno() {
   const [cursoId, setCursoId] = useState("");
   const [lista, setLista] = React.useState([]);
   const dayjs = require("dayjs");
+  const [alumno, setAlumno] = useState({});
 
   const formik = useFormik({
     initialValues: {
-      nombre: "",
+      nombre: alumno ? alumno.nombre : "",
       apellido: "",
       documento: "",
       fechaNac: "",
@@ -91,6 +92,21 @@ export default function ModificarAlumno() {
     };
     getLista();
   }, []);
+
+  useEffect(() => {
+    if (alumno) {
+      formik.setValues({
+        nombre: alumno.nombre || "",
+        apellido: alumno.apellido || "",
+        documento: alumno.documento || "",
+        fechaNac: alumno.fechaNac || "",
+        email: alumno.email || "",
+        sexo: alumno.sexo || "",
+        ColegioId: colegioId,
+        CursoId: alumno.CursoId || "",
+      });
+    }
+  }, [alumno, colegioId]);
 
   return (
     <Box
@@ -141,7 +157,7 @@ export default function ModificarAlumno() {
           <Typography component="h1" variant="h5">
             Modificar Alumno
           </Typography>
-          <SearchBar></SearchBar>
+          <SearchBar onSearch={setAlumno} setAlert={setAlert}></SearchBar>
         </Box>
 
         <Box
@@ -200,6 +216,7 @@ export default function ModificarAlumno() {
                   <DateField
                     label="Fecha de Nacimiento"
                     onChange={handleDateChange}
+                    value={dayjs(formik.values.fechaNac)}
                   />
                 </DemoContainer>
               </LocalizationProvider>
@@ -240,7 +257,7 @@ export default function ModificarAlumno() {
                   name="curso"
                   labelId="curso-label"
                   id="curso"
-                  value={cursoId}
+                  value={formik.values.CursoId}
                   label="curso"
                   onChange={handleCurso}
                 >
