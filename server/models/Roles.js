@@ -14,7 +14,9 @@ module.exports = (Sequelize, DataTypes) => {
     }
   );
   Roles.associate = (models) => {
-    Roles.hasMany(models.Usuarios);
+    Roles.hasMany(models.Usuarios, {
+      onDelete: "CASCADE",
+    });
   };
 
   return Roles;

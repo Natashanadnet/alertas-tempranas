@@ -19,7 +19,10 @@ module.exports = (Sequelize, DataTypes) => {
   );
 
   Usuarios.associate = (models) => {
-    Usuarios.belongsTo(models.Roles, {
+    Usuarios.belongsTo(models.Roles, { onDelete: "CASCADE" });
+    Usuarios.belongsToMany(models.Colegios, {
+      through: models.ColegioPersonal,
+      foreignKey: "usuarioId",
       onDelete: "CASCADE",
     });
   };
