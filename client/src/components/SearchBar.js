@@ -6,12 +6,9 @@ import axios from "axios"; // Asegúrate de importar axios
 
 const SearchBar = ({ onSearch, setAlert }) => {
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Evita que el formulario se envíe automáticamente
-
-    // Realiza la búsqueda solo si se proporciona la función onSearch
+    event.preventDefault();
     if (onSearch) {
       const documento = event.target.elements.searchQuery.value;
-      console.log(documento);
 
       try {
         const res = await axios.post(
@@ -21,8 +18,7 @@ const SearchBar = ({ onSearch, setAlert }) => {
 
         if (res.status === 200) {
           const alumno = res.data.alumno;
-          console.log(alumno);
-          // Hacer algo con el resultado, por ejemplo, llamar a onSearch
+
           onSearch(alumno);
         }
       } catch (error) {

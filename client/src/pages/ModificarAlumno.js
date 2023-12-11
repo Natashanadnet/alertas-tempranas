@@ -43,7 +43,8 @@ export default function ModificarAlumno() {
 
   const formik = useFormik({
     initialValues: {
-      nombre: alumno ? alumno.nombre : "",
+      id: "",
+      nombre: "",
       apellido: "",
       documento: "",
       fechaNac: "",
@@ -54,7 +55,10 @@ export default function ModificarAlumno() {
     },
     onSubmit: async (values) => {
       try {
-        const res = await axios.post("http://localhost:3001/alumnos", values);
+        const res = await axios.put(
+          "http://localhost:3001/alumnos/modificar",
+          values
+        );
         setOpen(true);
       } catch (error) {
         setAlert({
@@ -96,6 +100,7 @@ export default function ModificarAlumno() {
   useEffect(() => {
     if (alumno) {
       formik.setValues({
+        id: alumno.id || "",
         nombre: alumno.nombre || "",
         apellido: alumno.apellido || "",
         documento: alumno.documento || "",
@@ -119,12 +124,12 @@ export default function ModificarAlumno() {
       <Box>
         <Dialog open={open} onClose={handleDialogButton}>
           <DialogTitle id="confirmacion">
-            {"Alumno creado correctamente"}
+            {"Alumno modificado correctamente"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="confirmacion-text">
               El alumno {formik.values.nombre} {formik.values.apellido} ha sido
-              creado correctamente.
+              modificado correctamente.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
