@@ -89,7 +89,11 @@ export default function DireItems() {
             </ListItemIcon>
             <ListItemText primary="Añadir" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            component={Link}
+            to="./modificar-alumno"
+          >
             <ListItemIcon>
               <CreateIcon />
             </ListItemIcon>

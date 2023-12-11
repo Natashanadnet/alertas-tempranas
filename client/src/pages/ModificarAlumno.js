@@ -25,8 +25,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateField } from "@mui/x-date-pickers/DateField";
+import SearchBar from "../components/SearchBar";
 
-export default function RegistrarAlumno() {
+export default function ModificarAlumno() {
   const [alert, setAlert] = useState({
     severity: "error",
     message: "",
@@ -136,9 +137,12 @@ export default function RegistrarAlumno() {
           alignItems: "start",
         }}
       >
-        <Typography component="h1" variant="h5">
-          Registrar Alumno
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
+          <Typography component="h1" variant="h5">
+            Modificar Alumno
+          </Typography>
+          <SearchBar></SearchBar>
+        </Box>
 
         <Box
           component="form"
@@ -255,7 +259,7 @@ export default function RegistrarAlumno() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Registrar
+            Modificar
           </Button>
           <Grid container justifyContent="center"></Grid>
         </Box>
