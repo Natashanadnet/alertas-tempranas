@@ -174,7 +174,8 @@ export default function DashboardProfe() {
                 height: "100vh",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
+                alignItems: "start",
+                mt: 4,
               }}
             >
               {/* <img

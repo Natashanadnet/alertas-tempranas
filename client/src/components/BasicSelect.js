@@ -1,10 +1,13 @@
 import * as React from "react";
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const darkTheme = createTheme({
   palette: {
@@ -13,10 +16,25 @@ const darkTheme = createTheme({
 });
 
 export default function BasicSelect() {
-  const [age, setAge] = React.useState("");
+  const [colegio, setColegio] = React.useState("");
+  const [lista, setLista] = React.useState([]);
+  const { setColegioId } = useAuth();
+
+  useEffect(() => {
+    const getLista = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/colegios");
+        setLista(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLista();
+  }, []);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setColegio(event.target.value);
+    setColegioId(event.target.value);
   };
 
   return (
@@ -27,13 +45,15 @@ export default function BasicSelect() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={colegio}
             label="Colegio"
             onChange={handleChange}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {lista.map((colegio) => (
+              <MenuItem key={colegio.id} value={colegio.id}>
+                {colegio.nombre}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>

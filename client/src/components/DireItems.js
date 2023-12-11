@@ -14,6 +14,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Collapse from "@mui/material/Collapse";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import List from "@mui/material/List";
 
 export default function DireItems() {
@@ -35,7 +36,11 @@ export default function DireItems() {
       </ListItemButton>
       <Collapse in={openColegio} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            component={Link}
+            to="./registrar-colegio"
+          >
             <ListItemIcon>
               <AddBusinessIcon />
             </ListItemIcon>
@@ -52,6 +57,16 @@ export default function DireItems() {
               <DeleteIcon />
             </ListItemIcon>
             <ListItemText primary="Eliminar" />
+          </ListItemButton>
+          <ListItemButton
+            sx={{ pl: 4 }}
+            component={Link}
+            to="./asignar-colegio"
+          >
+            <ListItemIcon>
+              <AddCircleOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary="Asignar" />
           </ListItemButton>
         </List>
       </Collapse>

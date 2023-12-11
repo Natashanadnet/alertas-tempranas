@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const initialState = { usuario: null, isAuthenticated: false, colegio: null };
+  const initialState = { usuario: null, isAuthenticated: false, colegio: "" };
 
   function reducer(state, action) {
     switch (action.type) {
@@ -48,18 +48,19 @@ function AuthProvider({ children }) {
     // Eliminar del localStorage
     localStorage.removeItem("usuario");
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("colegio");
 
     dispatch({ type: "logout" });
   }
 
-  function setColegio(colegio) {
-    localStorage.setItem("colegio", JSON.stringify(colegio));
-    dispatch({ type: "setColegio", payload: colegio });
+  function setColegioId(colegio) {
+    localStorage.setItem("colegio", colegio);
+    dispatch({ type: "colegio", payload: colegio });
   }
 
   return (
     <AuthContext.Provider
-      value={{ usuario, isAuthenticated, colegio, login, logout, setColegio }}
+      value={{ usuario, isAuthenticated, colegio, login, logout, setColegioId }}
     >
       {children}
     </AuthContext.Provider>

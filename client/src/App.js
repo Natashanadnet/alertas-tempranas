@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import Missing from "./pages/Missing";
 import AccesoDenegado from "./pages/AccesoDenegado";
 import RegistrarAlumno from "./pages/RegistrarAlumno";
+import RegistrarColegio from "./pages/RegistrarColegio";
+import AsignarColegio from "./pages/AsignarColegio";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -31,7 +33,9 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
           <Route path="director" element={<DashboardDire />}>
+            <Route path="registrar-colegio" element={<RegistrarColegio />} />
             <Route path="registrar-alumno" element={<RegistrarAlumno />} />
+            <Route path="asignar-colegio" element={<AsignarColegio />} />
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={3} />}>
