@@ -1,13 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import DashboardProfe from "./pages/DashboardProfe";
 import DashboardDire from "./pages/DashboardDire";
-import DashboarExp from "./pages/DashboardExp";
 import RequireAuth from "./pages/RequireAuth";
 import Layout from "./components/Layout";
 import Missing from "./pages/Missing";
 import AccesoDenegado from "./pages/AccesoDenegado";
+import RegistrarAlumno from "./pages/RegistrarAlumno";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -26,13 +25,17 @@ function App() {
 
         {/* Rutas protegidas */}
         <Route element={<RequireAuth allowedRoles={1} />}>
-          <Route path="profesor" element={<DashboardProfe />} />
+          <Route path="profesor" element={<DashboardDire />}>
+            <Route path="registrar-alumno" element={<RegistrarAlumno />} />
+          </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
-          <Route path="director" element={<DashboardDire />} />
+          <Route path="director" element={<DashboardDire />}>
+            <Route path="registrar-alumno" element={<RegistrarAlumno />} />
+          </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={3} />}>
-          <Route path="exp" element={<DashboarExp />} />
+          <Route path="exp" element={<DashboardDire />} />
         </Route>
 
         {/* Ruta 404 */}

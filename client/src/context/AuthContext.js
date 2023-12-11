@@ -3,7 +3,7 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const initialState = { usuario: null, isAuthenticated: false };
+  const initialState = { usuario: null, isAuthenticated: false, colegio: null };
 
   function reducer(state, action) {
     switch (action.type) {
@@ -11,12 +11,14 @@ function AuthProvider({ children }) {
         return { ...state, usuario: action.payload, isAuthenticated: true };
       case "logout":
         return { ...state, usuario: null, isAuthenticated: false };
+      case "colegio":
+        return { ...state, colegio: action.payload };
       default:
         throw new Error("Unknown action");
     }
   }
 
-  const [{ usuario, isAuthenticated }, dispatch] = useReducer(
+  const [{ usuario, isAuthenticated, colegio }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -50,8 +52,15 @@ function AuthProvider({ children }) {
     dispatch({ type: "logout" });
   }
 
+  function setColegio(colegio) {
+    localStorage.setItem("colegio", JSON.stringify(colegio));
+    dispatch({ type: "setColegio", payload: colegio });
+  }
+
   return (
-    <AuthContext.Provider value={{ usuario, isAuthenticated, login, logout }}>
+    <AuthContext.Provider
+      value={{ usuario, isAuthenticated, colegio, login, logout, setColegio }}
+    >
       {children}
     </AuthContext.Provider>
   );

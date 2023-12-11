@@ -9,20 +9,15 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "../components/ListItems";
-import Chart from "../components/Chart";
-import Deposits from "../components/Deposits";
-import Orders from "../components/Orders";
+import DireItems from "../components/DireItems";
 import { useAuth } from "../context/AuthContext";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import BasicSelect from "../components/BasicSelect";
+import { Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -130,7 +125,8 @@ export default function DashboardProfe() {
                   Rol: Director
                 </Typography>
               </Box>
-              <Box sx={{ alignSelf: "center" }}>
+              <Box sx={{ alignSelf: "center", display: "flex", gap: 5 }}>
+                <BasicSelect></BasicSelect>
                 <Button
                   onClick={handleLogout}
                   sx={{ backgroundColor: "#38bdf8" }}
@@ -156,11 +152,7 @@ export default function DashboardProfe() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
-          </List>
+          <DireItems></DireItems>
         </Drawer>
         <Box
           component="main"
@@ -185,11 +177,12 @@ export default function DashboardProfe() {
                 alignItems: "center",
               }}
             >
-              <img
+              {/* <img
                 src={process.env.PUBLIC_URL + "/construccion.png"}
                 alt="Imagen de pagina no encontrada"
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
-              />
+              /> */}
+              <Outlet></Outlet>
             </Box>
           </Container>
         </Box>
