@@ -15,11 +15,14 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Collapse from "@mui/material/Collapse";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ListIcon from "@mui/icons-material/List";
 import List from "@mui/material/List";
 
 export default function DireItems() {
   const [openColegio, setOpenColegio] = useState(false);
   const [openAlumno, setOpenAlumno] = useState(false);
+  const [openProfes, setOpenProfes] = useState(false);
 
   const handleClick = (state) => {
     state((curr) => !curr);
@@ -27,6 +30,12 @@ export default function DireItems() {
 
   return (
     <List component="nav">
+      <ListItemButton component={Link} to="./home-dire">
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItemButton>
       <ListItemButton onClick={() => handleClick(setOpenColegio)}>
         <ListItemIcon>
           <StoreIcon />
@@ -46,18 +55,17 @@ export default function DireItems() {
             </ListItemIcon>
             <ListItemText primary="Añadir" />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <CreateIcon />
-            </ListItemIcon>
-            <ListItemText primary="Modificar" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Eliminar" />
-          </ListItemButton>
+        </List>
+      </Collapse>
+      <ListItemButton onClick={() => handleClick(setOpenProfes)}>
+        <ListItemIcon>
+          <SchoolIcon />
+        </ListItemIcon>
+        <ListItemText primary="Profesores" />
+        {openProfes ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={openProfes} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
           <ListItemButton
             sx={{ pl: 4 }}
             component={Link}
@@ -67,6 +75,13 @@ export default function DireItems() {
               <AddCircleOutlineIcon />
             </ListItemIcon>
             <ListItemText primary="Asignar" />
+          </ListItemButton>
+
+          <ListItemButton sx={{ pl: 4 }} component={Link} to="./listar-profes">
+            <ListItemIcon>
+              <ListIcon />
+            </ListItemIcon>
+            <ListItemText primary="Listar" />
           </ListItemButton>
         </List>
       </Collapse>
@@ -89,36 +104,14 @@ export default function DireItems() {
             </ListItemIcon>
             <ListItemText primary="Añadir" />
           </ListItemButton>
-          <ListItemButton
-            sx={{ pl: 4 }}
-            component={Link}
-            to="./modificar-alumno"
-          >
+          <ListItemButton sx={{ pl: 4 }} component={Link} to="./listar-alumno">
             <ListItemIcon>
-              <CreateIcon />
+              <ListIcon />
             </ListItemIcon>
-            <ListItemText primary="Modificar" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <DeleteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Eliminar" />
+            <ListItemText primary="Listar" />
           </ListItemButton>
         </List>
       </Collapse>
-      <ListItemButton>
-        <ListItemIcon>
-          <SchoolIcon />
-        </ListItemIcon>
-        <ListItemText primary="Cursos" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemIcon>
-          <SquareFootIcon />
-        </ListItemIcon>
-        <ListItemText primary="Materias" />
-      </ListItemButton>
     </List>
   );
 }

@@ -5,7 +5,7 @@
   "scripts": {
     "install-all": "npm install -g concurrently && cd client && npm install && cd ../server && npm install",
     "start-all": "concurrently \"cd client && npm start\" \"cd server && npm start\"",
-    "setup-server": "cd server && node scripts/insert-initial-roles.js"
+    "setup-server": "cd server && node scripts/insert-initial-data.js"
   },
   "repository": {
     "type": "git",

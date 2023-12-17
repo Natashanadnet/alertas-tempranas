@@ -5,10 +5,6 @@ import { useFormik } from "formik";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -29,6 +25,7 @@ export default function RegistrarColegio() {
     show: false,
   });
   const [open, setOpen] = useState(false);
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -39,7 +36,10 @@ export default function RegistrarColegio() {
     },
     onSubmit: async (values) => {
       try {
-        const res = await axios.post("http://localhost:3001/usuarios", values);
+        const res = await axios.post(
+          `http://localhost:3001/colegios/${usuario.id}`,
+          values
+        );
         setOpen(true);
       } catch (error) {
         setAlert({
@@ -54,7 +54,7 @@ export default function RegistrarColegio() {
 
   const handleDialogButton = () => {
     setOpen(false);
-    navigate("/", { replace: true });
+    navigate("/director", { replace: true });
   };
 
   return (
@@ -65,8 +65,7 @@ export default function RegistrarColegio() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="confirmacion-text">
-            El colegio {formik.values.nombre} {formik.values.apellido} ha sido
-            creado correctamente.
+            El colegio {formik.values.nombre} ha sido creado correctamente.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

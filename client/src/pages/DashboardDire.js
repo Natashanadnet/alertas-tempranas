@@ -16,7 +16,7 @@ import DireItems from "../components/DireItems";
 import { useAuth } from "../context/AuthContext";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import BasicSelect from "../components/BasicSelect";
+import SelectColegioUsuario from "../components/SelectColegioUsuario";
 import { Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -126,10 +126,12 @@ export default function DashboardProfe() {
                 </Typography>
               </Box>
               <Box sx={{ alignSelf: "center", display: "flex", gap: 5 }}>
-                <BasicSelect></BasicSelect>
+                <SelectColegioUsuario
+                  usuarioId={usuario.id}
+                ></SelectColegioUsuario>
                 <Button
                   onClick={handleLogout}
-                  sx={{ backgroundColor: "#38bdf8" }}
+                  sx={{ backgroundColor: "red" }}
                   variant="contained"
                 >
                   Salir

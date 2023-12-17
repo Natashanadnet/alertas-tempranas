@@ -15,22 +15,29 @@ const darkTheme = createTheme({
   },
 });
 
-export default function BasicSelect() {
+export default function SelectColegioUsuario({ usuarioId }) {
   const [colegio, setColegio] = React.useState("");
   const [lista, setLista] = React.useState([]);
   const { setColegioId } = useAuth();
+  const colegioUsuario = JSON.parse(localStorage.getItem("colegio"));
+
+  useEffect(() => {
+    if (colegioUsuario) setColegio(colegioUsuario);
+  }, [colegioUsuario]);
 
   useEffect(() => {
     const getLista = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/colegios");
+        const res = await axios.get(
+          `http://localhost:3001/colegios/${usuarioId}`
+        );
         setLista(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     getLista();
-  }, []);
+  }, [usuarioId]);
 
   const handleChange = (event) => {
     setColegio(event.target.value);
@@ -42,19 +49,23 @@ export default function BasicSelect() {
       <Box sx={{ minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Colegio</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={colegio}
-            label="Colegio"
-            onChange={handleChange}
-          >
-            {lista.map((colegio) => (
-              <MenuItem key={colegio.id} value={colegio.id}>
-                {colegio.nombre}
-              </MenuItem>
-            ))}
-          </Select>
+          {lista.length > 0 ? (
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={colegio}
+              label="Colegio"
+              onChange={handleChange}
+            >
+              {lista.map((colegio) => (
+                <MenuItem key={colegio.id} value={colegio.id}>
+                  {colegio.nombre}
+                </MenuItem>
+              ))}
+            </Select>
+          ) : (
+            <p>Cargando colegios...</p>
+          )}
         </FormControl>
       </Box>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-const { Alumnos } = require("../models");
+const { Alumnos, Cursos } = require("../models");
 const { Op } = require("sequelize");
 
 const registrarAlum = async (req, res) => {
@@ -91,8 +91,72 @@ const updateAlum = async (req, res) => {
   }
 };
 
+const listarPorColegio = async (req, res) => {
+  try {
+    const colegioId = req.query.colegioId;
+
+    const colegioIdNumerico = parseInt(colegioId, 10);
+
+    if (isNaN(colegioIdNumerico)) {
+      return res.status(400).json({ error: "colegioId debe ser un número" });
+    }
+
+    const lista = await Alumnos.findAll({
+      where: { ColegioId: colegioIdNumerico },
+      include: [
+        {
+          model: Cursos,
+          attributes: ["descripcion"],
+        },
+      ],
+    });
+
+    res.json(lista);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al listar los alumnos" });
+  }
+};
+
+const eliminarAlum = async (req, res) => {
+  try {
+    const { alumnoId } = req.params;
+
+    const alumno = await Alumnos.findByPk(alumnoId);
+    if (!alumno) {
+      return res.status(404).json({ error: "No se encontró al alumno" });
+    }
+
+    await alumno.destroy();
+
+    res.json({ message: "Alumno eliminado correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar al alumno" });
+  }
+};
+
+const buscarPorId = async (req, res) => {
+  try {
+    const alumnoId = req.query.alumnoId;
+
+    const alumno = await Alumnos.findByPk(alumnoId);
+    if (!alumno) {
+      return res.status(404).json({ error: "No se encontró al alumno" });
+    }
+
+    res.json(alumno);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al buscar al alumno" });
+  }
+};
+
 module.exports = {
   registrarAlum,
   buscarPorDocu,
   updateAlum,
+  listarPorColegio,
+  eliminarAlum,
+  buscarPorId,
 };

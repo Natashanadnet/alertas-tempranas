@@ -24,7 +24,6 @@ export default function SignInSide() {
     show: false,
   });
   const { login, isAuthenticated, usuario } = useAuth();
-  console.log(usuario);
 
   const navigate = useNavigate();
 
@@ -35,7 +34,6 @@ export default function SignInSide() {
     },
 
     onSubmit: async (values) => {
-      console.log(values);
       try {
         const res = await axios.post(
           "http://localhost:3001/usuarios/login",

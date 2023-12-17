@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios"; // Asegúrate de importar axios
 
-const SearchBar = ({ onSearch, setAlert }) => {
+const SearchBarAlumno = ({ onSearch, setAlert }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (onSearch) {
@@ -37,7 +37,7 @@ const SearchBar = ({ onSearch, setAlert }) => {
     <form onSubmit={handleSubmit}>
       <TextField
         name="searchQuery"
-        placeholder="Search..."
+        placeholder="Buscar por documento"
         InputProps={{
           endAdornment: (
             <IconButton type="submit">
@@ -50,4 +50,4 @@ const SearchBar = ({ onSearch, setAlert }) => {
   );
 };
 
-export default SearchBar;
+export default SearchBarAlumno;

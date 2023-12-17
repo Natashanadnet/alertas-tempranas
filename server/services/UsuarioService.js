@@ -1,4 +1,4 @@
-const { Usuarios } = require("../models");
+const { Usuarios, Colegios, ColegioPersonal } = require("../models");
 const bcrypt = require("bcrypt");
 
 const crearUsuario = async (req, res) => {
@@ -66,7 +66,89 @@ const login = async (req, res) => {
   }
 };
 
+const buscarProfesor = async (req, res) => {
+  try {
+    const { documento } = req.body;
+
+    const usuario = await Usuarios.findOne({
+      where: { documento: documento },
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Profesor no encontrado" });
+    }
+
+    if (usuario.RoleId !== 1) {
+      return res.status(404).json({ error: "El usuario no es profesor" });
+    }
+
+    res.json({ usuario: usuario });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al buscar el profesor" });
+  }
+};
+
+const listarProfesoresSegunColegio = async (req, res) => {
+  try {
+    const colegioId = +req.query.colegioId;
+
+    const profesores = await Usuarios.findAll({
+      where: { RoleId: 1 },
+      include: [
+        {
+          model: Colegios,
+          through: { model: ColegioPersonal, attributes: [] },
+          where: { id: colegioId },
+          attributes: [],
+        },
+      ],
+    });
+
+    res.json(profesores);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al listar los profesores" });
+  }
+};
+
+const eliminarUsuarioDeColegio = async (req, res) => {
+  try {
+    const colegioId = req.query.colegioId;
+    const usuarioId = req.query.usuarioId;
+
+    const usuario = await Usuarios.findByPk(usuarioId);
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    const colegio = await Colegios.findByPk(colegioId);
+
+    if (!colegio) {
+      return res.status(404).json({ error: "Colegio no encontrado" });
+    }
+
+    await ColegioPersonal.destroy({
+      where: {
+        colegioId: colegioId,
+        usuarioId: usuarioId,
+      },
+    });
+
+    res.json({ message: "Profesor eliminado del colegio" });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Error al eliminar el profesor del colegio" });
+  }
+};
+
 module.exports = {
   crearUsuario,
   login,
+  buscarProfesor,
+  listarProfesoresSegunColegio,
+  eliminarUsuarioDeColegio,
 };

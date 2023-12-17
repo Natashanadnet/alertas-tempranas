@@ -10,7 +10,12 @@ function AuthProvider({ children }) {
       case "login":
         return { ...state, usuario: action.payload, isAuthenticated: true };
       case "logout":
-        return { ...state, usuario: null, isAuthenticated: false };
+        return {
+          ...state,
+          usuario: null,
+          isAuthenticated: false,
+          colegio: "",
+        };
       case "colegio":
         return { ...state, colegio: action.payload };
       default:
@@ -25,13 +30,22 @@ function AuthProvider({ children }) {
 
   // Efecto para cargar usuario desde localStorage al cargar la página
   useEffect(() => {
+    // Restaurar usuario y autenticación desde localStorage
     const storedUsuario = localStorage.getItem("usuario");
     const storedIsAuthenticated = localStorage.getItem("isAuthenticated");
+    const storedColegio = localStorage.getItem("colegio");
 
     if (storedUsuario && storedIsAuthenticated) {
       dispatch({
         type: "login",
         payload: JSON.parse(storedUsuario),
+      });
+    }
+
+    if (storedColegio) {
+      dispatch({
+        type: "colegio",
+        payload: storedColegio,
       });
     }
   }, []);

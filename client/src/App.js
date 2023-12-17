@@ -10,6 +10,9 @@ import RegistrarAlumno from "./pages/RegistrarAlumno";
 import RegistrarColegio from "./pages/RegistrarColegio";
 import AsignarColegio from "./pages/AsignarColegio";
 import ModificarAlumno from "./pages/ModificarAlumno";
+import HomeDire from "./pages/HomeDire";
+import ListarAlumnos from "./pages/ListarAlumnos";
+import ListarProfes from "./pages/ListarProfes";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -34,10 +37,13 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
           <Route path="director" element={<DashboardDire />}>
+            <Route path="home-dire" element={<HomeDire />} />
             <Route path="registrar-colegio" element={<RegistrarColegio />} />
             <Route path="registrar-alumno" element={<RegistrarAlumno />} />
-            <Route path="modificar-alumno" element={<ModificarAlumno />} />
+            <Route path="modificar-alumno/:id" element={<ModificarAlumno />} />
             <Route path="asignar-colegio" element={<AsignarColegio />} />
+            <Route path="listar-alumno" element={<ListarAlumnos />} />
+            <Route path="listar-profes" element={<ListarProfes />} />
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={3} />}>

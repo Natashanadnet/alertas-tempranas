@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,13 +21,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import AlumnoSchema from "../Schemas/AlumnoSchema";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateField } from "@mui/x-date-pickers/DateField";
-import SearchBar from "../components/SearchBar";
+import { DatePicker } from "@mui/x-date-pickers";
+import SearchBarAlumno from "../components/SearchBarAlumno";
+import dayjs from "dayjs";
 
 export default function ModificarAlumno() {
+  let { id } = useParams();
   const [alert, setAlert] = useState({
     severity: "error",
     message: "",
@@ -35,11 +36,12 @@ export default function ModificarAlumno() {
   });
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const colegioId = localStorage.getItem("colegio");
   const [cursoId, setCursoId] = useState("");
   const [lista, setLista] = React.useState([]);
-  const dayjs = require("dayjs");
   const [alumno, setAlumno] = useState({});
+  const fechaMaxima = dayjs().subtract(3, "year");
+  const fechaMinima = dayjs().subtract(20, "year");
+  const [error, setError] = React.useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -47,10 +49,10 @@ export default function ModificarAlumno() {
       nombre: "",
       apellido: "",
       documento: "",
-      fechaNac: "",
+      fechaNac: fechaMaxima,
       email: "",
       sexo: "",
-      ColegioId: colegioId,
+      ColegioId: "",
       CursoId: "",
     },
     onSubmit: async (values) => {
@@ -73,7 +75,7 @@ export default function ModificarAlumno() {
 
   const handleDialogButton = () => {
     setOpen(false);
-    navigate("/director", { replace: true });
+    navigate("/director/listar-alumno", { replace: true });
   };
 
   const handleCurso = (event) => {
@@ -81,9 +83,24 @@ export default function ModificarAlumno() {
     setCursoId(event.target.value);
   };
 
-  const handleDateChange = (date) => {
-    formik.values.fechaNac = dayjs(date).format("YYYY-MM-DD");
-  };
+  const errorMessage = React.useMemo(() => {
+    switch (error) {
+      case "maxDate": {
+        return "No puede tener menos de 3 años";
+      }
+      case "minDate": {
+        return "No puede tener mas de 20 años ";
+      }
+
+      case "invalidDate": {
+        return "Fecha invalida";
+      }
+
+      default: {
+        return "";
+      }
+    }
+  }, [error]);
 
   useEffect(() => {
     const getLista = async () => {
@@ -98,20 +115,41 @@ export default function ModificarAlumno() {
   }, []);
 
   useEffect(() => {
+    if (id) {
+      const getAlumno = async () => {
+        try {
+          const res = await axios.get(
+            `http://localhost:3001/alumnos/buscar-id?alumnoId=${id}`
+          );
+          setAlumno(res.data);
+        } catch (error) {
+          console.log(error);
+          setAlert({
+            severity: "error",
+            message: error.response.data.error,
+            show: true,
+          });
+        }
+      };
+      getAlumno();
+    }
+  }, []);
+
+  useEffect(() => {
     if (alumno) {
       formik.setValues({
         id: alumno.id || "",
         nombre: alumno.nombre || "",
         apellido: alumno.apellido || "",
         documento: alumno.documento || "",
-        fechaNac: alumno.fechaNac || "",
+        fechaNac: alumno.fechaNac || fechaMaxima,
         email: alumno.email || "",
         sexo: alumno.sexo || "",
-        ColegioId: colegioId,
+        ColegioId: alumno.ColegioId || "",
         CursoId: alumno.CursoId || "",
       });
     }
-  }, [alumno, colegioId]);
+  }, [alumno]);
 
   return (
     <Box
@@ -162,7 +200,10 @@ export default function ModificarAlumno() {
           <Typography component="h1" variant="h5">
             Modificar Alumno
           </Typography>
-          <SearchBar onSearch={setAlumno} setAlert={setAlert}></SearchBar>
+          <SearchBarAlumno
+            onSearch={setAlumno}
+            setAlert={setAlert}
+          ></SearchBarAlumno>
         </Box>
 
         <Box
@@ -217,13 +258,21 @@ export default function ModificarAlumno() {
             </Grid>
             <Grid item xs={12}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={["DateField"]}>
-                  <DateField
-                    label="Fecha de Nacimiento"
-                    onChange={handleDateChange}
-                    value={dayjs(formik.values.fechaNac)}
-                  />
-                </DemoContainer>
+                <DatePicker
+                  value={dayjs(formik.values.fechaNac)}
+                  onChange={(newValue) => {
+                    formik.values.fechaNac =
+                      dayjs(newValue).format("YYYY-MM-DD");
+                  }}
+                  onError={(newError) => setError(newError)}
+                  slotProps={{
+                    textField: {
+                      helperText: errorMessage,
+                    },
+                  }}
+                  minDate={fechaMinima}
+                  maxDate={fechaMaxima}
+                />
               </LocalizationProvider>
             </Grid>
             <Grid item xs={12}>

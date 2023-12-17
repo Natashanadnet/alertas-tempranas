@@ -1,4 +1,8 @@
 import * as yup from "yup";
+import dayjs from "dayjs";
+
+const fechaMaxima = dayjs().subtract(3, "year").format("DD-MM-YYYY");
+const fechaMinima = dayjs().subtract(20, "year").format("DD-MM-YYYY");
 
 const AlumnoSchema = yup.object({
   nombre: yup
@@ -14,10 +18,6 @@ const AlumnoSchema = yup.object({
   documento: yup
     .string("Ingrese su documento")
     .required("El documento es obligatorio"),
-  fechaNac: yup
-    .date("Ingrese una fecha válida")
-    .required("La fecha de nacimiento es obligatoria")
-    .max(new Date(), "La fecha de nacimiento no puede ser en el futuro"),
   email: yup
     .string("Ingrese su email")
     .required("El email es obligatorio")
