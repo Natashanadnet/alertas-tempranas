@@ -28,8 +28,7 @@ module.exports = (Sequelize, DataTypes) => {
       onDelete: "CASCADE",
     });
     Usuarios.belongsToMany(models.Materias, {
-      through: models.UsuarioMateria,
-      unique: false,
+      through: { model: models.UsuarioMateria, unique: false },
       foreignKey: "usuarioId",
     });
   };

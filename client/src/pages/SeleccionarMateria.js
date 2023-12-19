@@ -26,6 +26,7 @@ function SeleccionarMateria() {
   const [habilitado, setHabilitado] = useState(colegioId ? true : false);
   const [materiasList, setMateriasList] = useState(null);
   const [materiasListProfe, setMateriaListProfe] = useState(null);
+  const [actualizarLista, setActualizarLista] = useState(false);
   const rows = materiasListProfe;
   const columns = [
     {
@@ -98,9 +99,7 @@ function SeleccionarMateria() {
     };
 
     getListaMateriasProfesor();
-  }, [usuario, colegioId]);
-
-  console.log(materiasListProfe);
+  }, [usuario, colegioId, actualizarLista]);
 
   return (
     <>
@@ -156,6 +155,7 @@ function SeleccionarMateria() {
               setOpen={setOpen}
               usuarioId={usuario.id}
               colegioId={colegioId}
+              setActualizarLista={setActualizarLista}
             >
               {materiasList}
             </MateriaSelect>

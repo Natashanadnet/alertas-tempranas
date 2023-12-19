@@ -20,8 +20,7 @@ module.exports = (Sequelize, DataTypes) => {
 
   Materias.associate = (models) => {
     Materias.belongsToMany(models.Usuarios, {
-      through: models.UsuarioMateria,
-      unique: false,
+      through: { model: models.UsuarioMateria, unique: false },
       foreignKey: "materiaId",
     });
     Materias.belongsToMany(models.Alumnos, {

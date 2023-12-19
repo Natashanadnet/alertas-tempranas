@@ -16,6 +16,7 @@ export default function MateriaSelect({
   setOpen,
   usuarioId,
   colegioId,
+  setActualizarLista,
 }) {
   const materiasList = children;
   const [materias, setMaterias] = React.useState([]);
@@ -47,6 +48,7 @@ export default function MateriaSelect({
       );
 
       setOpen(true);
+      setActualizarLista((curr) => !curr);
     } catch (error) {
       console.error(error);
       setAlert({

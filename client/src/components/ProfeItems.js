@@ -17,7 +17,7 @@ export default function ProfeItems() {
         </ListItemIcon>
         <ListItemText primary="Seleccionar materias" />
       </ListItemButton>
-      <ListItemButton component={Link} to="./home-dire">
+      <ListItemButton component={Link} to="./cargar-indicadores">
         <ListItemIcon>
           <NoteAltIcon />
         </ListItemIcon>

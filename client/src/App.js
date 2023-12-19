@@ -15,6 +15,8 @@ import ListarAlumnos from "./pages/ListarAlumnos";
 import ListarProfes from "./pages/ListarProfes";
 import DashboardProfe from "./pages/DashboardProfe";
 import SeleccionarMateria from "./pages/SeleccionarMateria";
+import CargarIndicadores from "./pages/CargarIndicadores";
+import CargaIndicadoresAlum from "./pages/CargaIndicadoresAlum";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -38,6 +40,8 @@ function App() {
               path="seleccionar-materia"
               element={<SeleccionarMateria />}
             />
+            <Route path="cargar-indicadores" element={<CargarIndicadores />} />
+            <Route path="carga" element={<CargaIndicadoresAlum />} />
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
