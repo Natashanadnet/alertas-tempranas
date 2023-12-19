@@ -32,6 +32,9 @@ module.exports = (Sequelize, DataTypes) => {
     Colegios.hasMany(models.Alumnos, {
       onDelete: "CASCADE",
     });
+    Colegios.hasMany(models.UsuarioMateria, {
+      onDelete: "CASCADE",
+    });
   };
 
   return Colegios;

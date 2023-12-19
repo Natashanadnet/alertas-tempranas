@@ -1,3 +1,5 @@
+const UsuarioMateria = require("./UsuarioMateria");
+
 module.exports = (Sequelize, DataTypes) => {
   const Materias = Sequelize.define(
     "Materias",
@@ -19,8 +21,8 @@ module.exports = (Sequelize, DataTypes) => {
   Materias.associate = (models) => {
     Materias.belongsToMany(models.Usuarios, {
       through: models.UsuarioMateria,
+      unique: false,
       foreignKey: "materiaId",
-      onDelete: "CASCADE",
     });
     Materias.belongsToMany(models.Alumnos, {
       through: models.AlumnoMateria,

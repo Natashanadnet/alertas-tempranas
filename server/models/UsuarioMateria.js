@@ -6,6 +6,7 @@ module.exports = (Sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        unique: true,
       },
     },
     {
@@ -13,16 +14,18 @@ module.exports = (Sequelize, DataTypes) => {
     }
   );
 
-  // Definir las asociaciones
   UsuarioMateria.associate = (models) => {
     UsuarioMateria.belongsTo(models.Usuarios, {
       onDelete: "CASCADE",
       foreignKey: "usuarioId",
     });
-
     UsuarioMateria.belongsTo(models.Materias, {
       onDelete: "CASCADE",
       foreignKey: "materiaId",
+    });
+
+    UsuarioMateria.belongsTo(models.Colegios, {
+      onDelete: "CASCADE",
     });
   };
 

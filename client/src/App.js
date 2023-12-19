@@ -13,6 +13,8 @@ import ModificarAlumno from "./pages/ModificarAlumno";
 import HomeDire from "./pages/HomeDire";
 import ListarAlumnos from "./pages/ListarAlumnos";
 import ListarProfes from "./pages/ListarProfes";
+import DashboardProfe from "./pages/DashboardProfe";
+import SeleccionarMateria from "./pages/SeleccionarMateria";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -31,8 +33,11 @@ function App() {
 
         {/* Rutas protegidas */}
         <Route element={<RequireAuth allowedRoles={1} />}>
-          <Route path="profesor" element={<DashboardDire />}>
-            <Route path="registrar-alumno" element={<RegistrarAlumno />} />
+          <Route path="profesor" element={<DashboardProfe />}>
+            <Route
+              path="seleccionar-materia"
+              element={<SeleccionarMateria />}
+            />
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
