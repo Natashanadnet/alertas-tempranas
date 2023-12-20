@@ -17,6 +17,8 @@ import DashboardProfe from "./pages/DashboardProfe";
 import SeleccionarMateria from "./pages/SeleccionarMateria";
 import CargarIndicadores from "./pages/CargarIndicadores";
 import CargaIndicadoresAlum from "./pages/CargaIndicadoresAlum";
+import Reportes from "./pages/Reportes";
+import DashboardExp from "./pages/DashboardExp";
 
 // const darkTheme = createTheme({
 //   palette: {
@@ -42,6 +44,7 @@ function App() {
             />
             <Route path="cargar-indicadores" element={<CargarIndicadores />} />
             <Route path="carga" element={<CargaIndicadoresAlum />} />
+            <Route path="reportes" element={<Reportes />} />
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={2} />}>
@@ -56,7 +59,9 @@ function App() {
           </Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={3} />}>
-          <Route path="exp" element={<DashboardDire />} />
+          <Route path="exp" element={<DashboardExp />}>
+            <Route path="home-exp" element={<HomeDire />} />
+          </Route>
         </Route>
 
         {/* Ruta 404 */}

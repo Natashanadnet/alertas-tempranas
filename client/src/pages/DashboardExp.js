@@ -6,19 +6,18 @@ import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ProfeItems from "../components/ProfeItems";
 import { useAuth } from "../context/AuthContext";
 import Button from "@mui/material/Button";
 import { useNavigate, useLocation } from "react-router-dom";
 import SelectColegioUsuario from "../components/SelectColegioUsuario";
 import { Outlet } from "react-router-dom";
+import ExpItems from "../components/ExpItems";
 
 const drawerWidth = 240;
 
@@ -69,7 +68,7 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function DashboardProfe() {
+export default function DashboardExp() {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,8 +84,8 @@ export default function DashboardProfe() {
 
   useEffect(() => {
     // Redireccion al entrar al dashboard
-    if (location.pathname === "/profesor") {
-      navigate("/profesor/seleccionar-materia");
+    if (location.pathname === "/exp") {
+      navigate("/exp/home-exp");
     }
   }, [navigate, location.pathname]);
 
@@ -131,7 +130,7 @@ export default function DashboardProfe() {
                   Bienvenido {usuario.nombre} {usuario.apellido}
                 </Typography>
                 <Typography sx={{ justifySelf: "flex-start" }}>
-                  Rol: Profesor
+                  Rol: Exp
                 </Typography>
               </Box>
               <Box sx={{ alignSelf: "center", display: "flex", gap: 5 }}>
@@ -163,7 +162,7 @@ export default function DashboardProfe() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <ProfeItems></ProfeItems>
+          <ExpItems></ExpItems>
         </Drawer>
         <Box
           component="main"

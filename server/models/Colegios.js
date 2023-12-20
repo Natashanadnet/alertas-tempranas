@@ -24,11 +24,6 @@ module.exports = (Sequelize, DataTypes) => {
       foreignKey: "colegioId",
       onDelete: "CASCADE",
     });
-    Colegios.belongsToMany(models.Cursos, {
-      through: models.CursoColegio,
-      foreignKey: "colegioId",
-      onDelete: "CASCADE",
-    });
     Colegios.hasMany(models.Alumnos, {
       onDelete: "CASCADE",
     });

@@ -8,6 +8,9 @@ const {
   listarPorColegio,
   eliminarAlum,
   buscarPorId,
+  buscarPorIdConCurso,
+  vincularMateriaAlum,
+  listarPorMateria,
 } = require("../services/AlumnoService");
 
 router.get("/", async (req, res) => {
@@ -16,6 +19,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/buscar-id", buscarPorId);
+
+router.get("/buscar-id-curso", buscarPorIdConCurso);
+
+router.get("/listar-reporte", listarPorMateria);
 
 router.get("/cursos", async (req, res) => {
   const listOfCursos = await Cursos.findAll();
@@ -29,6 +36,8 @@ router.get("/listar", async (req, res) => {
 router.post("/", (req, res) => {
   registrarAlum(req, res);
 });
+
+router.post("/vincular-materia", vincularMateriaAlum);
 
 router.post("/buscar", async (req, res) => {
   buscarPorDocu(req, res);

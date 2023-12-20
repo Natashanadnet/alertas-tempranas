@@ -50,7 +50,7 @@ export default function RegistrarAlumno() {
       documento: "",
       fechaNac: dayjs().subtract(3, "year"),
       email: "",
-      sexo: "",
+      SexoId: "",
       ColegioId: colegioId,
       CursoId: "",
     },
@@ -68,8 +68,6 @@ export default function RegistrarAlumno() {
     },
     validationSchema: AlumnoSchema,
   });
-
-  console.log(formik.values);
 
   const handleDialogButton = () => {
     setOpen(false);
@@ -257,10 +255,10 @@ export default function RegistrarAlumno() {
               <FormControl fullWidth variant="filled">
                 <InputLabel id="sexo-label">Sexo</InputLabel>
                 <Select
-                  name="sexo"
+                  name="SexoId"
                   labelId="sexo-label"
-                  id="sexo"
-                  value={formik.values.sexo}
+                  id="SexoId"
+                  value={formik.values.SexoId}
                   label="Sexo"
                   onChange={formik.handleChange}
                 >

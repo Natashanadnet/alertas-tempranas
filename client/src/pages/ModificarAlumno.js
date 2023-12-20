@@ -51,7 +51,7 @@ export default function ModificarAlumno() {
       documento: "",
       fechaNac: fechaMaxima,
       email: "",
-      sexo: "",
+      SexoId: "",
       ColegioId: "",
       CursoId: "",
     },
@@ -144,7 +144,7 @@ export default function ModificarAlumno() {
         documento: alumno.documento || "",
         fechaNac: alumno.fechaNac || fechaMaxima,
         email: alumno.email || "",
-        sexo: alumno.sexo || "",
+        SexoId: alumno.SexoId || "",
         ColegioId: alumno.ColegioId || "",
         CursoId: alumno.CursoId || "",
       });
@@ -292,10 +292,10 @@ export default function ModificarAlumno() {
               <FormControl fullWidth variant="filled">
                 <InputLabel id="sexo-label">Sexo</InputLabel>
                 <Select
-                  name="sexo"
+                  name="SexoId"
                   labelId="sexo-label"
-                  id="sexo"
-                  value={formik.values.sexo}
+                  id="SexoId"
+                  value={formik.values.SexoId}
                   label="Sexo"
                   onChange={formik.handleChange}
                 >

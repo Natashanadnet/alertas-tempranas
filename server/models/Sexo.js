@@ -1,6 +1,6 @@
 module.exports = (Sequelize, DataTypes) => {
-  const Cursos = Sequelize.define(
-    "Cursos",
+  const Sexo = Sequelize.define(
+    "Sexo",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -9,18 +9,17 @@ module.exports = (Sequelize, DataTypes) => {
       },
 
       descripcion: { type: DataTypes.STRING, allowNull: false },
-      nivel: { type: DataTypes.STRING, allowNull: false },
     },
     {
-      tableName: "cursos",
+      tableName: "sexo",
     }
   );
 
-  Cursos.associate = (models) => {
-    Cursos.hasMany(models.Alumnos, {
+  Sexo.associate = (models) => {
+    Sexo.hasMany(models.Alumnos, {
       onDelete: "CASCADE",
     });
   };
 
-  return Cursos;
+  return Sexo;
 };

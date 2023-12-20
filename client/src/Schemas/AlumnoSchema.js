@@ -22,7 +22,9 @@ const AlumnoSchema = yup.object({
     .string("Ingrese su email")
     .required("El email es obligatorio")
     .email("Ingrese un email válido"),
-  sexo: yup.string("Seleccione su genero").required("El genero es obligatorio"),
+  SexoId: yup
+    .number("Seleccione su genero")
+    .required("El genero es obligatorio"),
 });
 
 export default AlumnoSchema;

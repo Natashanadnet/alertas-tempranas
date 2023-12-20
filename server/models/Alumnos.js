@@ -13,7 +13,6 @@ module.exports = (Sequelize, DataTypes) => {
       documento: { type: DataTypes.STRING, allowNull: false, unique: true },
       fechaNac: { type: DataTypes.DATEONLY, allowNull: false },
       email: { type: DataTypes.STRING, allowNull: false, unique: true },
-      sexo: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       tableName: "alumnos",
@@ -27,7 +26,9 @@ module.exports = (Sequelize, DataTypes) => {
     Alumnos.belongsTo(models.Cursos, {
       onDelete: "CASCADE",
     });
-
+    Alumnos.belongsTo(models.Sexo, {
+      onDelete: "CASCADE",
+    });
     Alumnos.belongsToMany(models.Materias, {
       through: models.AlumnoMateria,
       foreignKey: "alumnoId",

@@ -3,7 +3,11 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const initialState = { usuario: null, isAuthenticated: false, colegio: "" };
+  const initialState = {
+    usuario: JSON.parse(localStorage.getItem("usuario")) || null,
+    isAuthenticated: Boolean(localStorage.getItem("isAuthenticated")),
+    colegio: localStorage.getItem("colegio") || "",
+  };
 
   function reducer(state, action) {
     switch (action.type) {

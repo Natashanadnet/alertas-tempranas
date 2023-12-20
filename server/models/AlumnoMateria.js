@@ -8,7 +8,6 @@ module.exports = (Sequelize, DataTypes) => {
         autoIncrement: true,
       },
       nota: { type: DataTypes.INTEGER, allowNull: true },
-      comportamiento: { type: DataTypes.STRING, allowNull: true },
       asistencia: { type: DataTypes.INTEGER, allowNull: true },
     },
     {
@@ -26,6 +25,12 @@ module.exports = (Sequelize, DataTypes) => {
     AlumnoMateria.belongsTo(models.Materias, {
       onDelete: "CASCADE",
       foreignKey: "materiaId",
+    });
+
+    AlumnoMateria.belongsTo(models.Comportamiento, {
+      onDelete: "CASCADE",
+      foreignKey: "comportamientoId",
+      as: "Comportamiento",
     });
   };
 

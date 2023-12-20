@@ -23,7 +23,7 @@ export default function ProfeItems() {
         </ListItemIcon>
         <ListItemText primary="Cargar indicadores" />
       </ListItemButton>
-      <ListItemButton component={Link} to="./home-dire">
+      <ListItemButton component={Link} to="./reportes">
         <ListItemIcon>
           <QueryStatsIcon />
         </ListItemIcon>

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -15,7 +16,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DireItems from "../components/DireItems";
 import { useAuth } from "../context/AuthContext";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SelectColegioUsuario from "../components/SelectColegioUsuario";
 import { Outlet } from "react-router-dom";
 
@@ -71,6 +72,7 @@ const defaultTheme = createTheme();
 export default function DashboardProfe() {
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const usuario = JSON.parse(localStorage.getItem("usuario"));
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = () => {
@@ -80,6 +82,13 @@ export default function DashboardProfe() {
     navigate("/");
     logout();
   };
+
+  useEffect(() => {
+    // Redireccion al entrar al dashboard
+    if (location.pathname === "/director") {
+      navigate("/director/listar-alumno");
+    }
+  }, [navigate, location.pathname]);
 
   return (
     <ThemeProvider theme={defaultTheme}>

@@ -1,4 +1,11 @@
-const { Alumnos, Cursos } = require("../models");
+const {
+  Alumnos,
+  Cursos,
+  Materias,
+  AlumnoMateria,
+  Comportamiento,
+  UsuarioMateria,
+} = require("../models");
 const { Op } = require("sequelize");
 
 const registrarAlum = async (req, res) => {
@@ -152,6 +159,100 @@ const buscarPorId = async (req, res) => {
   }
 };
 
+const buscarPorIdConCurso = async (req, res) => {
+  try {
+    const alumnoId = req.query.alumnoId;
+
+    const alumno = await Alumnos.findOne({
+      where: { id: alumnoId },
+      include: [
+        {
+          model: Cursos,
+          attributes: ["descripcion"],
+        },
+      ],
+    });
+
+    if (!alumno) {
+      return res.status(404).json({ error: "Alumno no encontrado" });
+    }
+
+    res.json(alumno);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al buscar al alumno" });
+  }
+};
+
+const vincularMateriaAlum = async (req, res) => {
+  try {
+    const datos = req.body;
+    const materiaId = req.body.materiaId;
+    const alumnoId = req.body.alumnoId;
+
+    const materiaExistente = await Materias.findOne({
+      where: { id: materiaId },
+    });
+    if (!materiaExistente) {
+      return res.status(400).json({ error: "Esa materia no existe" });
+    }
+
+    const asignacionExistente = await AlumnoMateria.findOne({
+      where: {
+        alumnoId: alumnoId,
+        materiaId: materiaId,
+      },
+    });
+    if (asignacionExistente) {
+      return res
+        .status(400)
+        .json({ error: "El alumno ya posee registros en esa materia" });
+    }
+
+    await AlumnoMateria.create(datos);
+
+    res.json({ message: "Indicadores cargados correctamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al cargar los indicadores" });
+  }
+};
+
+const listarPorMateria = async (req, res) => {
+  try {
+    const { usuarioId } = req.query;
+    const { colegioId: ColegioId } = req.query;
+    const { materiaId } = req.query;
+
+    const lista = await AlumnoMateria.findAll({
+      where: { materiaId: materiaId },
+      include: [
+        {
+          model: Alumnos,
+          attributes: ["id", "nombre", "apellido"],
+          where: { ColegioId: ColegioId },
+          include: [
+            {
+              model: Cursos,
+              attributes: ["descripcion"],
+            },
+          ],
+        },
+        {
+          model: Comportamiento,
+          as: "Comportamiento",
+          attributes: ["descripcion"],
+        },
+      ],
+    });
+
+    res.json(lista);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al listar los reportes" });
+  }
+};
+
 module.exports = {
   registrarAlum,
   buscarPorDocu,
@@ -159,4 +260,7 @@ module.exports = {
   listarPorColegio,
   eliminarAlum,
   buscarPorId,
+  buscarPorIdConCurso,
+  vincularMateriaAlum,
+  listarPorMateria,
 };

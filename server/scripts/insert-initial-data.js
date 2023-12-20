@@ -7,6 +7,10 @@ const {
   ColegioPersonal,
   Alumnos,
   Materias,
+  Sexo,
+  Comportamiento,
+  UsuarioMateria,
+  AlumnoMateria,
 } = require("../models");
 
 //Para los roles:
@@ -14,6 +18,16 @@ const rolesData = [
   { descripcion: "Profesor" },
   { descripcion: "Director" },
   { descripcion: "Exp" },
+];
+
+//Para las entradas de genero
+const sexoData = [
+  {
+    descripcion: "Femenino",
+  },
+  {
+    descripcion: "Masculino",
+  },
 ];
 
 //Para los usuarios:
@@ -100,7 +114,7 @@ const alumnosData = [
     documento: "12345678",
     fechaNac: "2008-08-13",
     email: "carlaperez@correo.com",
-    sexo: 1,
+    SexoId: 1,
     ColegioId: 1,
     CursoId: 4,
   },
@@ -110,7 +124,7 @@ const alumnosData = [
     documento: "12467627",
     fechaNac: "2009-06-05",
     email: "martaagarcia@correo.com",
-    sexo: 1,
+    SexoId: 1,
     ColegioId: 1,
     CursoId: 2,
   },
@@ -120,7 +134,7 @@ const alumnosData = [
     documento: "22071899",
     fechaNac: "2005-01-12",
     email: "gabrielrodriguez@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 1,
     CursoId: 5,
   },
@@ -130,7 +144,7 @@ const alumnosData = [
     documento: "87639265",
     fechaNac: "2005-07-24",
     email: "diego@diego",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 1,
     CursoId: 8,
   },
@@ -140,7 +154,7 @@ const alumnosData = [
     documento: "19176399",
     fechaNac: "2005-05-23",
     email: "lucialopez@correo.com",
-    sexo: 1,
+    SexoId: 1,
     ColegioId: 1,
     CursoId: 5,
   },
@@ -150,7 +164,7 @@ const alumnosData = [
     documento: "79100429",
     fechaNac: "2008-05-19",
     email: "gabrielfernandez@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 2,
     CursoId: 1,
   },
@@ -160,7 +174,7 @@ const alumnosData = [
     documento: "49476032",
     fechaNac: "2007-11-22",
     email: "lucasgarcia@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 2,
     CursoId: 4,
   },
@@ -170,7 +184,7 @@ const alumnosData = [
     documento: "70130352",
     fechaNac: "2005-11-12",
     email: "juanperez@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 2,
     CursoId: 6,
   },
@@ -180,7 +194,7 @@ const alumnosData = [
     documento: "34759715",
     fechaNac: "2009-09-25",
     email: "lucasperez@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 2,
     CursoId: 4,
   },
@@ -190,7 +204,7 @@ const alumnosData = [
     documento: "15791937",
     fechaNac: "2007-05-06",
     email: "lucasfernandez@correo.com",
-    sexo: 2,
+    SexoId: 2,
     ColegioId: 2,
     CursoId: 7,
   },
@@ -200,7 +214,7 @@ const alumnosData = [
     documento: "70568490",
     fechaNac: "2008-12-11",
     email: "martafernandez@correo.com",
-    sexo: 1,
+    SexoId: 1,
     ColegioId: 2,
     CursoId: 9,
   },
@@ -219,25 +233,115 @@ const materiasData = [
 ];
 
 //Para las relaciones entre materia, colegio y profesor:
+const usuarioMateriaData = [
+  { ColegioId: 1, usuarioId: 1, materiaId: 1 },
+  { ColegioId: 1, usuarioId: 1, materiaId: 2 },
+];
+
+//Para las entradas de comportamiento
+const comportamientoData = [
+  {
+    descripcion: "Inaceptable",
+  },
+  {
+    descripcion: "Aceptable",
+  },
+  {
+    descripcion: "Excelente",
+  },
+];
+
+//Para la carga de notas, asistencia y comportamiento de los alumnos
+const alumnoMateriaData = [
+  {
+    nota: 5,
+    asistencia: 60,
+    alumnoId: 1,
+    materiaId: 1,
+    comportamientoId: 3,
+  },
+  {
+    nota: 3,
+    asistencia: 30,
+    alumnoId: 2,
+    materiaId: 1,
+    comportamientoId: 2,
+  },
+  {
+    nota: 2,
+    asistencia: 85,
+    alumnoId: 3,
+    materiaId: 1,
+    comportamientoId: 2,
+  },
+  {
+    nota: 4,
+    asistencia: 70,
+    alumnoId: 4,
+    materiaId: 1,
+    comportamientoId: 1,
+  },
+  {
+    nota: 1,
+    asistencia: 50,
+    alumnoId: 5,
+    materiaId: 1,
+    comportamientoId: 1,
+  },
+  {
+    nota: 5,
+    asistencia: 95,
+    alumnoId: 1,
+    materiaId: 2,
+    comportamientoId: 3,
+  },
+  {
+    nota: 2,
+    asistencia: 40,
+    alumnoId: 2,
+    materiaId: 2,
+    comportamientoId: 1,
+  },
+  {
+    nota: 3,
+    asistencia: 90,
+    alumnoId: 3,
+    materiaId: 2,
+    comportamientoId: 3,
+  },
+  {
+    nota: 5,
+    asistencia: 85,
+    alumnoId: 4,
+    materiaId: 2,
+    comportamientoId: 2,
+  },
+  {
+    nota: 2,
+    asistencia: 70,
+    alumnoId: 5,
+    materiaId: 2,
+    comportamientoId: 2,
+  },
+];
 
 const createInitialRoles = async () => {
   try {
     await Roles.bulkCreate(rolesData);
+    await Sexo.bulkCreate(sexoData);
     await Usuarios.bulkCreate(usersData);
     await Colegios.bulkCreate(colegiosData);
     await Cursos.bulkCreate(cursosData);
     await ColegioPersonal.bulkCreate(colegiosUsuariosData);
     await Alumnos.bulkCreate(alumnosData);
     await Materias.bulkCreate(materiasData);
+    await Comportamiento.bulkCreate(comportamientoData);
+    await UsuarioMateria.bulkCreate(usuarioMateriaData);
+    await AlumnoMateria.bulkCreate(alumnoMateriaData);
 
-    console.log(
-      "Valores iniciales de Roles, Usuarios, Colegios, Cursos, Alumnos y Materias insertados correctamente."
-    );
+    console.log("Valores iniciales insertados correctamente.");
   } catch (error) {
-    console.error(
-      "Error al insertar valores iniciales de Roles, Usuarios, Colegios, Cursos, Alumnos y Materias:",
-      error
-    );
+    console.error("Error al insertar valores iniciales:", error);
   }
 };
 
